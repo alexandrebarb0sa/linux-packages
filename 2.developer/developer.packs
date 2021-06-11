@@ -1,0 +1,9 @@
+python3.9
+python2.7
+python-dev
+python3-pip
+r-base
+*miniconda3
+git
+*sublime
+*vscode

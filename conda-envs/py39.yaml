@@ -1,0 +1,20 @@
+name: py39
+channels:
+  - defaults
+  - anaconda
+  - conda-forge
+  - plotly
+dependencies:
+  - python=3.9
+  - pip  
+  - jupyter
+  - jupyterlab
+  - jupyter_nbextensions_configurator
+  - jupyter_contrib_nbextensions
+  - nbconvert
+  - voila
+  - rise    
+  - numpy
+  - pandas
+  - matplotlib
+  - plotly
