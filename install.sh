@@ -29,7 +29,7 @@ main() {
           elif [[ "$line" == *"[npm]"* ]]; then
             npm_pack=$(echo $line | cut -d ']' -f 2)
             if [ -z "$(sudo npm list -g | grep $npm_pack)" ]; then 
-              printf "| ├── $line: Instalando pacote \n"
+              printf "| ├── $line: Instalando pacote... \n"
               sudo npm install -g $npm_pack
             else
               printf "| ├── $line: Pacote já instalado! \n"
@@ -38,7 +38,7 @@ main() {
             if [ -z "$(dpkg -s $line 2>&1 > /dev/null)" ]; then
               printf "| ├── $line: Pacote já instalado! \n"
             else
-              printf "| ├── $line: Instalando pacote \n"
+              printf "| ├── $line: Instalando pacote... \n"
               sudo apt-get install -y $line > /dev/null
               sudo apt-get -f install > /dev/null
             fi
@@ -54,7 +54,7 @@ main() {
 download_url (){
   if [ $1 == "[url]miniconda3" ];then 
     if [ -z $(which conda) ]; then
-      printf "| ├── conda: Instalando pacote!\n"
+      printf "| ├── conda: Instalando pacote...\n"
       curl -O ${url["miniconda3"]}
       bash Miniconda3-py39_4.9.2-Linux-x86_64.sh -b -p ${prefix["miniconda3"]}
       rm Miniconda3-py39_4.9.2-Linux-x86_64.sh
@@ -70,7 +70,7 @@ download_url (){
 
   if [ $1 == "[url]sublime" ]; then
     if [ -z $(which subl) ];then
-      printf "| ├── sublime: Instalando pacote!\n"
+      printf "| ├── sublime: Instalando pacote...\n"
       wget -qO - ${url["sublime"]} | sudo apt-key add -
       echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
       sudo apt-get update
@@ -82,7 +82,7 @@ download_url (){
 
   if [ $1 == "[url]vscode" ]; then
     if [ -z $(which code) ];then
-      printf "| ├── vscode: Instalando pacote!\n"
+      printf "| ├── vscode: Instalando pacote...\n"
       wget ${url["vscode"]} 
       for deb in $(ls *.deb 2> /dev/null ); do
         if [[ "$deb" == *"code"* ]]; then
