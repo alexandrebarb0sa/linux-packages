@@ -5,7 +5,7 @@ python3-pip
 nodejs
 npm
 r-base
-*miniconda3
+[url]miniconda3
 git
-*sublime
-*vscode
+[url]sublime
+[url]vscode
