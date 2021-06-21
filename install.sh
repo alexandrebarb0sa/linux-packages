@@ -13,7 +13,7 @@ declare -A prefix
 url["miniconda3"]="https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh"
 prefix["miniconda3"]="/usr/local/miniconda3"
 
-url["sublinme"]="https://download.sublimetext.com/sublimehq-pub.gpg"
+url["sublime"]="https://download.sublimetext.com/sublimehq-pub.gpg"
 url["vscode"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
 
 main() {
@@ -24,24 +24,23 @@ main() {
       printf "├─┬\n"
       while IFS= read -r line || [ -n "$line" ]; do
         if [ ! -z $line ]; then
-          if [[ "$line" == *"*"* ]]; then
-            download_url "$line"          
-          else
-            if [ $dir == "npm" ]; then
-              if [ -z "$(sudo npm list -g | grep $line)" ]; then 
-                printf "| ├── $line: Instalando pacote \n"
-                sudo npm install -g $line
-              else
-                printf "| ├── $line: Pacote já instalado! \n"
-              fi
+          if [[ "$line" == *"[url]"* ]]; then
+            download_url "$line"
+          elif [[ "$line" == *"[npm]"* ]]; then
+            npm_pack=$(echo $line | cut -d ']' -f 2)
+            if [ -z "$(sudo npm list -g | grep $npm_pack)" ]; then 
+              printf "| ├── $line: Instalando pacote \n"
+              sudo npm install -g $npm_pack
             else
-              if [ -z "$(dpkg -s $line 2>&1 > /dev/null)" ]; then
-                printf "| ├── $line: Pacote já instalado! \n"
-              else
-                printf "| ├── $line: Instalando pacote \n"
-                sudo apt-get install -y $line > /dev/null
-                sudo apt-get -f install > /dev/null
-              fi
+              printf "| ├── $line: Pacote já instalado! \n"
+            fi
+        else
+            if [ -z "$(dpkg -s $line 2>&1 > /dev/null)" ]; then
+              printf "| ├── $line: Pacote já instalado! \n"
+            else
+              printf "| ├── $line: Instalando pacote \n"
+              sudo apt-get install -y $line > /dev/null
+              sudo apt-get -f install > /dev/null
             fi
           fi
         fi
@@ -53,7 +52,7 @@ main() {
 }
 
 download_url (){
-  if [ $1 == "*miniconda3" ];then 
+  if [ $1 == "[url]miniconda3" ];then 
     if [ -z $(which conda) ]; then
       printf "| ├── conda: Instalando pacote!\n"
       curl -O ${url["miniconda3"]}
@@ -69,7 +68,7 @@ download_url (){
     fi
   fi
 
-  if [ $1 == "*sublime" ]; then
+  if [ $1 == "[url]sublime" ]; then
     if [ -z $(which subl) ];then
       printf "| ├── sublime: Instalando pacote!\n"
       wget -qO - ${url["sublime"]} | sudo apt-key add -
@@ -81,7 +80,7 @@ download_url (){
     fi
   fi
 
-  if [ $1 == "*vscode" ]; then
+  if [ $1 == "[url]vscode" ]; then
     if [ -z $(which code) ];then
       printf "| ├── vscode: Instalando pacote!\n"
       wget ${url["vscode"]} 
