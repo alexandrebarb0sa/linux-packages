@@ -8,3 +8,4 @@ bash-completion
 wget
 curl
 libssl-dev
+bluez-tools

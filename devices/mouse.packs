@@ -1,0 +1,11 @@
+meson
+libudev-dev
+libevdev-dev
+libsystemd-dev
+check
+valgrind 
+swig
+python-gi-dev
+libjson-glib-dev
+libunistring-dev
+flake8
