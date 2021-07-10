@@ -1,4 +1,6 @@
 meson
+piper
+ratbagd
 libudev-dev
 libevdev-dev
 libsystemd-dev
