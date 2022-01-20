@@ -2,7 +2,10 @@ software-properties-common
 apt-transport-https
 build-essential 
 gnome-tweak-tool
+gnome-shell-extensions
 gnome-sushi
+flatpak
+vim
 nano
 bash-completion
 wget
